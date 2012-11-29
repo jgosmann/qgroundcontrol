@@ -110,9 +110,11 @@ INCLUDEPATH += $$MAVLINKPATH
 isEmpty(MAVLINK_CONF) { 
     INCLUDEPATH += $$MAVLINKPATH/common
 } else {
-    INCLUDEPATH += $$MAVLINKPATH/$$MAVLINK_CONF
-    #DEFINES += 'MAVLINK_CONF="$${MAVLINK_CONF}.h"'
-    DEFINES += $$sprintf('QGC_USE_%1_MESSAGES', $$upper($$MAVLINK_CONF))
+    for(protocol, MAVLINK_CONF) {
+        INCLUDEPATH += $$MAVLINKPATH/$$protocol
+        #DEFINES += 'MAVLINK_CONF="$${protocol}.h"'
+        DEFINES += $$sprintf('QGC_USE_%1_MESSAGES', $$upper($$protocol))
+    }
 }
 
 # Include general settings for QGroundControl
